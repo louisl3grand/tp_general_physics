@@ -57,7 +57,10 @@ rulesepcolor=\color{black}}
 \title{{\textsc{\Large{TP General Physics / M1}\\ [3cm]
       \textbf{\LARGE{High Velocity Cloud Analysis \\ in \\ HI4PI Data}}}} \\[2cm]}
 \vfill
- \author{Antoine Marchal \\ [1cm]}
+ \author{Antoine Marchal \\ [1cm]
+Université Paris-Sud \\ 
+Institut d’Astrophysique Spatiale \\
+2016-2017}
 \date{}
 
 
@@ -69,16 +72,32 @@ rulesepcolor=\color{black}}
 \newpage
 
 \newpage
-\chapter*{Introduction}
+\chapter{Introduction}
+The study of our own galaxy (the Milky Way) is especially complex by the fact that we are located inside. The sun is approximatly
+at 8.5 kpc from the galactic center (noted G) and have a radial velocity due to the rotation around G of $ 220 \, km.s^{-1}$. 
+As a fist approximation, we can discribe the galactic plane as a sum of three components : Gas (HI, neutral hydrogen), Star 
+and Dark Matter. All around the galactic plane are located an important gas reservoir called the Milky Way Halo. To better 
+understand how this reservoir constraint the physics of our galaxy, we must study it in detail. \\
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=4.in]{simulation}
+  \label{fig::simulation}
+  \caption{(a) Integrated intensity, (b) centroid velocity, and (c) velocity dispersion of a model CHVC (model Wb1a15b of 
+    Heitsch & Putman (2009)), traveling at 45◦ to the observer. Contours are given at [1, 5, 9, 13] K km s−1.  / 
+    (from Heitsch et al, 2016)}
+\end{figure} \\
+ 
 Since their discorevy by Muller et al (1963), High Velocity Clouds are studied as isolated objects. They are defined 
-as neutral atomic hydrogen with radial velocity that cannot be explained by the rotation of the Milky Way (Wakker 1991).   
-The neutral hydrogen is very well observed since many years through the 
-21cm hyperfine structure line, and the latest full sky survey is the result of the HI4PI collaboration. 
-More details are present in the recent article (in free access) : 
+as neutral atomic hydrogen with radial velocity (typically $ V_r \approx 200 \, km.s^{-1}$) that cannot be explained by the rotation 
+of the Milky Way (Wakker 1991). We present figure~\ref{fig::simulation} an HVC view from numerical simulation. 
+The neutral hydrogen is very well observed since many years through the 21cm hyperfine structure line, and the latest full sky survey 
+is the result of the HI4PI collaboration. More details are present in the recent article (in free access) : 
 \color{blue} \url{https://arxiv.org/abs/1610.06175} \color{black}. 
 This work is based on a single HVC cloud name HVC125+41-207 present in HI4PI. From the original data release, we develop a simple
 method to obtain some approximations of the physical properties of this cloud and its environment. \\
 
+\newpage 
 \noindent
 \underline{Physical constants} : \\
 \begin{itemize}
@@ -92,7 +111,8 @@ method to obtain some approximations of the physical properties of this cloud an
 %% \addcontentsline{toc}{chapter}{Introduction}
 \chapter{Manipulation of hyperspectral data}
 \section{Reading Data from HDF5 Files}
-This work is based on Hyperspectral imaging. For each pixel of the projected plan of sky we have an associated spectrum. \\
+This work is based on Hyperspectral imaging (see representation figure~\ref{fig::hyperspectral}). 
+For each pixel of the projected plan of sky we have an associated spectrum. \\
 
 \begin{figure}[h!]
   \centering
@@ -107,7 +127,7 @@ A good documentation is available on the following link:
 \color{blue} \url{https://www.getdatajoy.com/learn/Read_and_Write_HDF5_from_Python} \color{black}
 
 \section{High Velocity Cloud research}
-The HVC is located in the following spectral range : $v_{rad} (km.s^{-1}) = [-225, -185]$}. 
+The HVC HVC125+41-207 is located in the following spectral range : $v_{rad} (km.s^{-1}) = [-225, -185]$. 
 From the article describing the HI4PI survey, we can clean the cube considering the rms value. For exemple we keep 
 all values greater than $3 \times \sigma_{rms}$, with $\sigma_{rms}$ the sensitivity of HI4PI.
 After selecting the spectral range, we can plot the HVC using the 'imshow' function in the matplotlib library 
