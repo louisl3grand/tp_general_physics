@@ -110,7 +110,7 @@ method to obtain some approximations of the physical properties of this cloud an
 
 %% \addcontentsline{toc}{chapter}{Introduction}
 \chapter{Manipulation of hyperspectral data}
-\section{Reading Data from HDF5 Files}
+\section{Reading Data from FITS Files}
 This work is based on Hyperspectral imaging (see representation figure~\ref{fig::hyperspectral}). 
 For each pixel of the projected plan of sky we have an associated spectrum. \\
 
@@ -122,25 +122,35 @@ For each pixel of the projected plan of sky we have an associated spectrum. \\
   We can select a sub-regoin of this cube which corresponds to a smaller part of the sky.}
 \end{figure} \\
 
-We propose to read the hyperspectral data which are formatted in a HDF5 file using the python langague.
+We propose to read the hyperspectral cube which is formatted in FITS using the python programming.
 A good documentation is available on the following link: 
-\color{blue} \url{https://www.getdatajoy.com/learn/Read_and_Write_HDF5_from_Python} \color{black}
+\color{blue} \url{http://docs.astropy.org/en/stable/io/fits/} \color{black}
 
 \section{High Velocity Cloud research}
-The HVC HVC125+41-207 is located in the following spectral range : $v_{rad} (km.s^{-1}) = [-225, -185]$. 
+First, in order to understand the kind of data we use, we can visualize the total integreted column density map of the field 
+using the equation \ref{eq::NHI}. There is no clear evident of an HVC because we are totaly dominated by the galactic emission.
+Indeed, the HVC HVC125+41-207 is located in the following spectral range : $v_{rad} (km.s^{-1}) = [-225, -185]$. 
 From the article describing the HI4PI survey, we can clean the cube considering the rms value. For exemple we keep 
 all values greater than $3 \times \sigma_{rms}$, with $\sigma_{rms}$ the sensitivity of HI4PI.
+
+
 After selecting the spectral range, we can plot the HVC using the 'imshow' function in the matplotlib library 
 (see \color{blue} \url{http://matplotlib.org} \color{black}) \\
-
 Note that the galactic longitude range and the galactic latitude range of the cube are respectively
 $l(deg) \in [119, 141]$ and $b(deg) \in [19, 51]$.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=4.in]{hvc.png}
+  \includegraphics[width=4.in]{field.png}
+  \label{fig::hyperspectral}
+  \caption{Total integreted column density map of the field. Note that the coordinates are in the galactic coordonate system.}
+\end{figure} \\
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=4.in]{hvc_select.png}
   \label{fig::hvc}
-  \caption{Representation of the HVC125+41-207 High Velocity Cloud}
+  \caption{Integrated intensity map of HVC125+41-207 High Velocity Cloud, i.e integration perform in the velocity range of the cloud.}
 \end{figure} \\
 
 \chapter{Physical properties of the HVC}
@@ -173,7 +183,9 @@ Tools to calculate the quantities that we have to get to compute the pressure as
 
 \noindent From the mean sprectra of the clump, we estimate $\left< N_{HI} \right>$ from 21 cm measurements. \\
 \begin{align}
-  \frac{\left< N_{HI} \right>}{cm^{-2}} = 1.82243 \times 10^{18} \times \int_{-\infty}^{+\infty} \left( \frac{T_b(v)}{K} \right) d\left( \frac{v}{km.s^{-1}}\right)
+  \frac{\left< N_{HI} \right>}{cm^{-2}} = 1.82243 \times 10^{18} \times \int_{-\infty}^{+\infty} \left( \frac{T_b(v)}{K} \right) 
+  d\left( \frac{v}{km.s^{-1}}\right)
+  \label{eq::NHI}
 \end{align} 
 where $T_b$ is the mean brightness temperature and $v$ is the the radial velocity. \\
 

@@ -7,7 +7,7 @@ from scipy import asarray as ar,exp
 from astropy import constants as const
 from astropy.io import fits
 from astropy import units as u
-from astropy import wcs
+import h5py
 
 plt.ion()
 
@@ -20,11 +20,8 @@ def gauss(x, a, x0, sigma):
 
 
 def mean2vel(CRVAL, CDELT, CRPIX, mean):
-    vel = [(CRVAL + CDELT * (mean[i] - CRPIX)) for i in range(len(mean))] #VLSR [km.s-1]                                                                                                                                                                                            
+    vel = [(CRVAL + CDELT * (mean[i] - CRPIX)) for i in range(len(mean))] #VLSR [km.s-1]                                                                                                                                                                                              
     return vel
-
-def plot_map(image, nb_fig, xtitle, xlabel, ylabel, vmin, vmax, cbar_label, wcs, imkw):
-    return fig
 
 # Constant values
 mh    = 1.6737236e-27 # kg
@@ -56,15 +53,7 @@ w.wcs.cdelt = np.array([hdu_data.header['CDELT1'], hdu_data.header['CDELT2']])
 w.wcs.crval = [hdu_data.header['CRVAL1'], hdu_data.header['CRVAL2']]
 w.wcs.ctype = [hdu_data.header['CTYPE1'], hdu_data.header['CTYPE2']]
 
-fig = plt.figure(0, figsize=(7, 7))
-ax = fig.add_axes([0.1,0.1,0.78,0.8], projection=w)
-ax.set_title("")
-ax.set_xlabel("LON [degree]")
-ax.set_ylabel("LAT [degree]")
-img = ax.imshow(np.sum(cube,axis=0), aspect='auto', **imkw)
-colorbar_ax = fig.add_axes([0.89, 0.1, 0.02, 0.8])
-cbar = fig.colorbar(img, cax=colorbar_ax)
-cbar.set_label("$NHI/ \, [1.83 \, 10^{18} \, cm^{-2}]$")
+
 
 rms = 43.e-3 # K
 
@@ -77,18 +66,7 @@ clean_hvc = np.copy(hvc)
 clean_hvc[np.where(hvc < 3. * rms)] = 0.
 
 sum_clean_hvc = np.sum(clean_hvc, axis=0)
-
-fig = plt.figure(1, figsize=(7, 7))
-ax = fig.add_axes([0.1,0.1,0.78,0.8], projection=w)
-ax.set_title("")
-ax.set_xlabel("LON [degree]")
-ax.set_ylabel("LAT [degree]")
-img = ax.imshow(np.sum(cube[idx,:,:],axis=0), aspect='auto', **imkw)
-colorbar_ax = fig.add_axes([0.89, 0.1, 0.02, 0.8])
-cbar = fig.colorbar(img, cax=colorbar_ax)
-cbar.set_label("$NHI/ \, [1.83 \, 10^{18} \, cm^{-2}]$")
-
-fig = plt.figure(2)
+fig = plt.figure(0)
 ax1 = fig.add_subplot(111) 
 ax1.imshow(sum_clean_hvc, interpolation = 'none')
 plt.show()
@@ -106,10 +84,11 @@ sigma = np.sqrt(np.sum((x - mean)**2 * y_real) / np.sum(y_real))
 
 popt, pcov = curve_fit(gauss, x, y_real, p0 = [1, mean, sigma])
             
-fig = plt.figure(3, figsize=(16,9))
+fig = plt.figure(2, figsize=(16,9))
 ax1 = fig.add_subplot(111) 
 ax1.plot(x, spectra, '.b', markersize=8)
 ax1.plot(x, gauss(x,*popt), color='r')
+
 
 theta = np.radians(15. * (51-29)/266.)
 
@@ -131,7 +110,7 @@ def P_k_Wolfire(z):
 
 Ps_k_theory = P_k_Wolfire(z)
 
-fig = plt.figure(4, figsize=(16,9))
+fig = plt.figure(3, figsize=(16,9))
 ax1 = fig.add_subplot(111)
 ax1.set_xscale('log')
 ax1.set_yscale('log')
