@@ -60,7 +60,7 @@ rulesepcolor=\color{black}}
  \author{Antoine Marchal \\ [1cm]
 Université Paris-Sud \\ 
 Institut d’Astrophysique Spatiale \\
-2016-2017}
+2018-2019}
 \date{}
 
 
@@ -73,11 +73,13 @@ Institut d’Astrophysique Spatiale \\
 
 \newpage
 \chapter{Introduction}
-The study of our own galaxy (the Milky Way) is especially complex by the fact that we are located inside. The sun is approximatly
-at 8.5 kpc from the galactic center (noted G) and have a radial velocity due to the rotation around G of $ 220 \, km.s^{-1}$. 
-As a fist approximation, we can discribe the galactic plane as a sum of three components : Gas (HI, neutral hydrogen), Star 
-and Dark Matter. All around the galactic plane are located an important gas reservoir called the Milky Way Halo. To better 
-understand how this reservoir constraint the physics of our galaxy, we must study it in detail. \\
+The study of our own galaxy, the Milky Way, is complicated by the fact that we are within it. 
+The sun, located at 8.5 kpc from the galactic center, moves in a circular orbit with a radial velocity of 
+220 km.s$^{-1}$. 
+As a first approximation, we can discribe the galactic plane as a sum of three components : Gas (molecular and neutral hydrogen), Star 
+and Dark Matter. Around this galactic plane, in what is called the galactic halo, there is an important gas reservoir mainly composed of neutral gas (HI). 
+It turns out that this reservoir could be an important source of gas for the formation of molecular clouds, the place where stars are formed. 
+To better understand the content and nature of this reservoir, we propose in this work to study one of these clouds, called High Velocity Clouds (HVC). 
 
 \begin{figure}[h!]
   \centering
@@ -89,15 +91,15 @@ understand how this reservoir constraint the physics of our galaxy, we must stud
 \end{figure} \\
  
 Since their discorevy by Muller et al (1963), High Velocity Clouds are studied as isolated objects. They are defined 
-as neutral atomic hydrogen with radial velocity (typically $ V_r \approx 200 \, km.s^{-1}$) that cannot be explained by the rotation 
-of the Milky Way (Wakker 1991). We present figure~\ref{fig::simulation} an HVC view from numerical simulation. 
-The neutral hydrogen is very well observed since many years through the 21cm hyperfine structure line, and the latest full sky survey 
-is the result of the HI4PI collaboration. More details are present in the recent article (in free access) : 
+as HI clouds with a radial velocity (typically $ V_r \approx 200 \, km.s^{-1}$) that cannot be explained by the rotation 
+curve of the Milky Way (Wakker 1991). Figure~\ref{fig::simulation} shows an HVC view from a numerical simulation performed by 
+Heitsch et al, 2016. HI is observed since many years through the 21 cm hyperfine structure line, and the latest full sky survey 
+has been released by the HI4PI collaboration. More details are present in this recent article : 
 \color{blue} \url{https://arxiv.org/abs/1610.06175} \color{black}. 
-This work is based on a single HVC cloud name HVC125+41-207 present in HI4PI. From the original data release, we develop a simple
-method to obtain some approximations of the physical properties of this cloud and its environment. \\
+The research project we adress here is based on a single HVC cloud named HVC125+41-207. 
+Starting from a part of this survey, we develop a simple method to obtain some physical properties of this cloud 
+and its environment. \\
 
-\newpage 
 \noindent
 \underline{Physical constants} : \\
 \begin{itemize}
@@ -109,10 +111,11 @@ method to obtain some approximations of the physical properties of this cloud an
 \end{itemize} \\
 
 %% \addcontentsline{toc}{chapter}{Introduction}
-\chapter{Manipulation of hyperspectral data}
+\chapter{Getting started - hyperspectral cube}
 \section{Reading Data from FITS Files}
-This work is based on Hyperspectral imaging (see representation figure~\ref{fig::hyperspectral}). 
-For each pixel of the projected plan of sky we have an associated spectrum. \\
+This work is based on an hyperspectral observation of the 21 cm line 
+(see representation figure~\ref{fig::hyperspectral}). For each line of sigh across the observation, a simple Doppler effet 
+calculation allows us to obtain a projected velocity spectrum. \\
 
 \begin{figure}[h!]
   \centering
@@ -122,42 +125,42 @@ For each pixel of the projected plan of sky we have an associated spectrum. \\
   We can select a sub-regoin of this cube which corresponds to a smaller part of the sky.}
 \end{figure} \\
 
-We propose to read the hyperspectral cube which is formatted in FITS using the python programming.
-A good documentation is available on the following link: 
+We propose to read this hyperspectral observation formatted in FITS using python.
+A good documentation is available via the following link: 
 \color{blue} \url{http://docs.astropy.org/en/stable/io/fits/} \color{black}
 
-\section{High Velocity Cloud research}
-First, in order to understand the kind of data we use, we can visualize the total integreted column density map of the field 
-using the equation \ref{eq::NHI}. There is no clear evident of an HVC because we are totaly dominated by the galactic emission.
-Indeed, the HVC HVC125+41-207 is located in the following spectral range : $v_{rad} (km.s^{-1}) = [-225, -185]$. 
-From the article describing the HI4PI survey, we can clean the cube considering the rms value. For exemple we keep 
-all values greater than $3 \times \sigma_{rms}$, with $\sigma_{rms}$ the sensitivity of HI4PI.
+\section{High Velocity Cloud location}
+To understand the data we are using, a first exercice would be to visualize the total integreted column density map of the field 
+using Eq. \ref{eq::NHI}. There is no clear evidence of an HVC in this map, simply because the total integrated density is dominated 
+by the HI emission of the Milky Way. Indeed, the HVC HVC125+41-207 is located in the following spectral range : $v_{rad} (km.s^{-1}) = [-225, -185]$. 
+From the article describing the HI4PI survey, it is also possible to clean the cube considering the rms value. For exemple we can keep 
+all values greater than $3 \times \sigma_{rms}$, with $\sigma_{rms}$ the sensitivity of the radio telescope used.
 
 
-After selecting the spectral range, we can plot the HVC using the 'imshow' function in the matplotlib library 
+After selecting the spectral range, we can plot the HVC using the 'imshow' function of matplotlib 
 (see \color{blue} \url{http://matplotlib.org} \color{black}) \\
 Note that the galactic longitude range and the galactic latitude range of the cube are respectively
 $l(deg) \in [119, 141]$ and $b(deg) \in [19, 51]$.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=4.in]{field.png}
+  \includegraphics[width=3.5in]{field.png}
   \label{fig::hyperspectral}
   \caption{Total integreted column density map of the field. Note that the coordinates are in the galactic coordonate system.}
 \end{figure} \\
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=4.in]{hvc_select.png}
+  \includegraphics[width=3.5in]{hvc_select.png}
   \label{fig::hvc}
   \caption{Integrated intensity map of HVC125+41-207 High Velocity Cloud, i.e integration perform in the velocity range of the cloud.}
 \end{figure} \\
 
 \chapter{Physical properties of the HVC}
 \section{Mean spectra of the HVC}
-To obtain some physical properties of this clump, we can analize the mean spectrum of the data.
-We graphically represent the numerical calculation of the passage of hyperspectral data to the mean spectrum of the cloud
-figure~\ref{fig::spectra}.
+To obtain some physical properties of this clump, we can analize the mean spectrum of the HVC.
+Figure~\ref{fig::spectra} shows a schematic view of the numerical calculation required to obtain the average spectrum of the cloud
+from the hyperspectral cube. 
 
 \begin{figure}[h!]
   \centering
@@ -168,8 +171,8 @@ figure~\ref{fig::spectra}.
 
 \section{Spectral analysis}
 As a first approximation, we can applied the Virial equilibrium to obtain the pressure outside the HVC as a function
-of the distance d (preferentialy expressed in kpc which is a unit of length used in astronomy and astrophysics). 
-This is actually nothing more than the pressure equilibrium between the inside medium and the outside medium.
+of the distance d (preferentialy expressed in kpc which is a unit of length used in astronomy). 
+It is nothing more than the balance between the inner and outer medium.
 
 \begin{align}
   \frac{P_s}{k} = \underbrace{\frac{\left< N_{HI} \right> \, T_k}{d \, \theta}}_\text{kinetic pressure} \,  
@@ -179,29 +182,28 @@ where $\theta$ is the observed angular diameter in radian, $T_k$ is the kinetic 
 $G$ and $k$ and respectively the gravitational constant and the Boltzmann constant, $\left< N_{HI} \right>$ is the mean value 
 of the column density and $\mu$ the mean mass per particle within the sphere. \\
 
-Tools to calculate the quantities that we have to get to compute the pressure as function of the distance of the cloud : \\
-
-\noindent From the mean sprectra of the clump, we estimate $\left< N_{HI} \right>$ from 21 cm measurements. \\
+\noindent From the average sprectrum of the clump, we can estimate the mean integrated column density 
+$\left< N_{HI} \right>$ from 21 cm measurements. \\
 \begin{align}
   \frac{\left< N_{HI} \right>}{cm^{-2}} = 1.82243 \times 10^{18} \times \int_{-\infty}^{+\infty} \left( \frac{T_b(v)}{K} \right) 
   d\left( \frac{v}{km.s^{-1}}\right)
   \label{eq::NHI}
 \end{align} 
-where $T_b$ is the mean brightness temperature and $v$ is the the radial velocity. \\
+where $T_b$ is the mean brightness temperature and $dv$ is the spectral resolution. \\
 
-\noindent Note that we can direclty get the surface density :
+\noindent Note that we can direclty obtain the surface density :
 \begin{align}
   \Sigma = \frac{\left<N_{HI}\right> \, m_H \, pc^2}{M_\astrosun}
 \end{align} \\
 where $m_H$ is the atomic mass of hydrogen, $pc$ is the definition of a parsec,
 and $M_{\astrosun}$ is the mass of the Sun. \\
 
-If we consider that the temperature of our system is only due to the kinetic temperature (without turbulence for exemple), 
-$T_k$ can be written as : 
+Considering that the observed velocity dispersion is only due to the thermal broadening, the kinetic temperature 
+of our system $T_k$ can be written as : 
 \begin{align}
   T_k = \frac{m_H \, \sigma_v^2}{k} \, (K)
 \end{align}
-$\sigma_v$ is obtained by fitting a gaussian function on the mean spectra that we calculated previously.
+$\sigma_v$ is computed by fitting a Gaussian function on the average spectrum obtained previously.
 
 \newpage
 %\listoffixmes
