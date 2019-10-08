@@ -26,6 +26,8 @@ def mean2vel(CRVAL, CDELT, CRPIX, mean):
 def plot_map(image, nb_fig, xtitle, xlabel, ylabel, vmin, vmax, cbar_label, wcs, imkw):
     return fig
 
+# To download the data cube from HI4PI >> wget http://cdsarc.u-strasbg.fr/ftp/J/A+A/594/A116/CUBES/GAL/CAR/CAR_G07.fits
+
 # Constant values
 mh    = 1.6737236e-27 # kg
 mu    = 1.25 * mh
@@ -40,7 +42,7 @@ pc2cm  = u.pc.to(u.cm)
 # HI4PI channel separation
 dv = 1.29 #km.s-1
 
-hdu_list_data = fits.open("../data/CAR_G07.fits")
+hdu_list_data = fits.open("/data/amarchal/HI4PI/CAR/CAR_G07.fits")
 hdu_data = hdu_list_data[0]
 
 cube = hdu_data.data
